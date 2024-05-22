@@ -18,6 +18,7 @@ MAIN_DOC_URL = 'https://docs.python.org/3/'
 PEP_URL = 'https://www.python.org/dev/peps/'
 
 
+
 precode_files = ['constants.py', 'main.py', 'utils.py']
 src_dir_files = [file.name for file in SRC_DIR.rglob('*.py')]
 try:
