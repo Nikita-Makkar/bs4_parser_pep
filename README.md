@@ -59,5 +59,6 @@ python parser.py whats-new
 ## Автор
 [Nikita-Makkar](github.com/Nikita-Makkar)
 
+
 Благодарности
 Отдельное спасибо разработчикам библиотек requests, requests-cache, beautifulsoup4 и tqdm за их отличные библиотеки, использованные в этом парсере.
