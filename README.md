@@ -21,7 +21,7 @@ pip install -r requirements.txt
 
 ## Использование
 ```
-python parser.py <mode> [-c] [-o <output_mode>]
+python main.py <mode> [-c] [-o <output_mode>]
 ```
 
 Аргументы командной строки

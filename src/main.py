@@ -25,7 +25,7 @@ def whats_new(session):
         version_a_tag = section.find('a')
         href = version_a_tag['href']
         version_link = urljoin(whats_new_url, href)
-        soup = get_soup(whats_new_url, href)
+        soup = get_soup(session, version_link)
         h1 = find_tag(soup, 'h1')
         dl = find_tag(soup, 'dl')
         dl_text = dl.text.replace('\n', ' ')
@@ -117,10 +117,7 @@ def pep(session):
                     f'Несовпадающие статусы: {pep_link_full}'
                     f' Статус в карточке: - {status_page}'
                     f' Ожидаемые статусы: - {status_long}')
-            if status_page in status_count:
-                status_count[status_page] += 1
-            else:
-                status_count[status_page] = 1
+            status_count[status_page] = status_count.get(status_page, 0) + 1
         else:
             logs.append(
                 f'На странице PEP {pep_link_full} '
