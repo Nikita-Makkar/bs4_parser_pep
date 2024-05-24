@@ -30,6 +30,8 @@ def find_tag(soup, tag, attrs=None):
 def get_soup(session, url):
     response = get_response(session, url)
     if response is None:
+        logging.error(f'Не удалось получить данные с {url}',
+                      stack_info=True)
         return
     soup = BeautifulSoup(response.text, features='lxml')
     return soup

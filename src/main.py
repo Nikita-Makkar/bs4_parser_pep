@@ -14,6 +14,9 @@ from utils import find_tag, get_soup
 def whats_new(session):
     whats_new_url = urljoin(MAIN_DOC_URL, 'whatsnew/')
     soup = get_soup(session, whats_new_url)
+    if soup is None:
+        logging.error(f'Не удалось получить данные с {whats_new_url}')
+        return
     main_div = find_tag(soup, 'section', attrs={'id': 'what-s-new-in-python'})
     div_with_ul = find_tag(main_div, 'div', attrs={'class': 'toctree-wrapper'})
     sections_by_python = div_with_ul.find_all(
@@ -38,6 +41,9 @@ def whats_new(session):
 
 def latest_versions(session):
     soup = get_soup(session, MAIN_DOC_URL)
+    if soup is None:
+        logging.error(f'Не удалось получить данные с { MAIN_DOC_URL}')
+        return
     sidebar = soup.find('div', {'class': 'sphinxsidebarwrapper'})
     ul_tags = sidebar.find_all('ul')
     for ul in ul_tags:
@@ -66,6 +72,10 @@ def latest_versions(session):
 def download(session):
     downloads_url = urljoin(MAIN_DOC_URL, 'download.html')
     soup = get_soup(session, downloads_url)
+    if soup is None:
+        logging.error(f'Не удалось получить данные с {downloads_url}')
+        return
+
     main_tag = soup.find('div', {'role': 'main'})
     table_tag = main_tag.find('table', {'class': 'docutils'})
     pdf_a4_tag = table_tag.find('a', {'href': re.compile(r'.+pdf-a4\.zip$')})
@@ -84,6 +94,9 @@ def download(session):
 
 def pep(session):
     soup = get_soup(session, PEP_DOC_URL)
+    if soup is None:
+        logging.error(f'Не удалось получить данные с {PEP_DOC_URL}')
+        return
     section_tag = find_tag(soup, 'section', {'id': 'numerical-index'})
     main_table = find_tag(section_tag, 'tbody')
     rows = main_table.find_all('tr')
@@ -124,9 +137,7 @@ def pep(session):
                 f'в таблице нет строки статуса.')
             continue
 
-        for log in logs:
-            logging.info(log)
-
+    logging.info(logs)
     results.extend(status_count.items())
     results.append(('Total', pep_count))
     return results
